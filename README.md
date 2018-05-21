@@ -2,20 +2,20 @@ Instruktioner för att köra igång detta projekt
 ----------------------------------------------
 
 1. Se till att du har python och pip installerat, projektet
-är testat med Python 2.7.
+är testat med Python 3.6.
 
 2. Ladda in allt som behövs för att köra Django. Detta görs
-lättast med `pip install -r requirements.txt` vilket kommer
+lättast med `pip3 install -r requirements.txt` vilket kommer
 installera alla beroenden som projektet har.
 
 3. Installera testdatabasen (SQLite används) genom att köra
-`python manage.py migrate`.
+`python3 manage.py migrate`.
 
 4. Skapa en adminanvändare så att du kan logga in via adminläget
 och enkelt skapa nya inlägg som administratör. Gör detta med:
-`python manage.py createsuperuser`.
+`python3 manage.py createsuperuser`.
 
-5. Starta testservern med `python manage.py runserver`.
+5. Starta testservern med `python3 manage.py runserver`.
 Dubbelkolla att du inte får några felmeddelanden.
 
 6. Surfa till http://localhost:8000 i din webbläsare där
