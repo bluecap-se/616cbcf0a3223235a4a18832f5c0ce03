@@ -1,9 +1,9 @@
-from django.forms import ModelForm
+from django import forms
 
 from kundocase.forum import models
 
 
-class QuestionForm(ModelForm):
+class QuestionForm(forms.ModelForm):
 
     class Meta:
         model = models.Question
@@ -12,10 +12,11 @@ class QuestionForm(ModelForm):
         }
 
 
-class AnswerForm(ModelForm):
+class AnswerForm(forms.ModelForm):
 
     class Meta:
         model = models.Answer
         exclude = ['created', 'updated']
         widgets = {
+            'question': forms.HiddenInput(),
         }

@@ -10,7 +10,7 @@ def startpage(request):
 
     return render(request, 'forum/startpage.html', {
         'questions': questions,
-        'form': forms.QuestionForm
+        'form': forms.QuestionForm,
     })
 
 
@@ -21,6 +21,7 @@ def question(request, id):
     return render(request, 'forum/question.html', {
         'question': question,
         'answers': answers,
+        'form': forms.AnswerForm(initial={'question': question}),
     })
 
 
@@ -32,5 +33,18 @@ def save_question(request):
         question = models.Question(**data)
         question.save()
         return redirect('forum:question', id=question.id)
+    except ValidationError as e:
+        return HttpResponseBadRequest(e.message)
+
+
+@require_http_methods(['POST'])
+def save_answer(request):
+    data = dict((k, request.POST.get(k, None)) for k, _ in forms.AnswerForm.base_fields.items())
+    data['question'] = get_object_or_404(models.Question, id=data.pop('question'))
+
+    try:
+        answer = models.Answer(**data)
+        answer.save()
+        return redirect('forum:question', id=answer.question.id)
     except ValidationError as e:
         return HttpResponseBadRequest(e.message)

@@ -13,4 +13,26 @@
         <p>{{ answer.content }}</p>
         <p>By: <strong>{{ answer.user_name }}</strong>, {{ answer.user_email }}</p>
     {% endfor %}
+
+    <h1>New answer</h1>
+    <form id="formCreateAnswer" action="{% url 'forum:save-answer' %}" method="post">
+        {% csrf_token %}
+        {{ form.question }}
+
+        <article class="panel">
+            <div class="form-item form-label-group">
+                Answer: {{ form.content }}
+            </div>
+
+            <div class="form-item form-label-group">
+                Name: {{ form.user_name }}
+            </div>
+
+            <div class="form-item form-label-group">
+                Email: {{ form.user_email }}
+            </div>
+
+            <button class="form-item btn btn-lg btn-primary btn-block" type="submit">Send</button>
+        </article>
+    </form>
 {% endblock %}
