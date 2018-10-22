@@ -1,3 +1,4 @@
+from django.core.exceptions import ValidationError
 from django.db import models
 
 
@@ -14,7 +15,7 @@ class Question(models.Model):
 
     def save(self, *args, **kwargs):
         if self.user_email == self.user_name:
-            raise Exception('User name and email can not be the same.')
+            raise ValidationError('User name and email can not be the same.')
 
         super(Question, self).save(*args, **kwargs)
 
@@ -32,6 +33,6 @@ class Answer(models.Model):
 
     def save(self, *args, **kwargs):
         if self.user_email == self.user_name:
-            raise Exception('User name and email can not be the same.')
+            raise ValidationError('User name and email can not be the same.')
 
         super(Answer, self).save(*args, **kwargs)

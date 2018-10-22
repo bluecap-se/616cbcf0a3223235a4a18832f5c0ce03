@@ -1,7 +1,11 @@
 from django.conf.urls import url
-from kundocase.forum.views import startpage, question
+from kundocase.forum import views
+
+
+app_name = 'forum'
 
 urlpatterns = [
-    url(r"^$", startpage, name="startpage"),
-    url(r"^(?P<id>\d+)$", question, name="question")
+    url(r'^$', views.startpage, name='startpage'),
+    url(r'^(?P<id>\d+)$', views.question, name='question'),
+    url(r'^save-question/?$', views.save_question, name='save-question'),
 ]
