@@ -12,6 +12,12 @@ class Question(models.Model):
     class Meta:
         ordering = ('created',)
 
+    def save(self, *args, **kwargs):
+        if self.user_email == self.user_name:
+            raise Exception('User name and email can not be the same.')
+
+        super(Question, self).save(*args, **kwargs)
+
 
 class Answer(models.Model):
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
@@ -23,3 +29,9 @@ class Answer(models.Model):
 
     class Meta:
         ordering = ('created',)
+
+    def save(self, *args, **kwargs):
+        if self.user_email == self.user_name:
+            raise Exception('User name and email can not be the same.')
+
+        super(Answer, self).save(*args, **kwargs)
