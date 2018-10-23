@@ -1,11 +1,16 @@
-from django.core import serializers
 from django.core.exceptions import ValidationError
 from django.http import HttpResponseBadRequest
 from django.shortcuts import render, get_object_or_404, redirect
-from kundocase.forum import models, forms, serializers
+from kundocase.forum import models, forms
 
 
 def startpage(request):
+    """
+    Serves first page
+
+    :param request: Django request object
+    :return: Django HTML view
+    """
     questions = models.Question.objects.all()
 
     return render(request, 'forum/startpage.html', {
@@ -83,13 +88,3 @@ def answer(request, id=None):
         'answer': answer,
         'form': forms.AnswerForm(initial=data),
     })
-
-
-def question_api(request, id=None):
-    question = get_object_or_404(models.Question, id=id)
-    answers = question.answer_set.all()
-
-    obj = serializers.serialize([question])
-    obj[0]['answers'] = serializers.serialize(answers)
-
-    return serializers.CustomResponse(obj)
