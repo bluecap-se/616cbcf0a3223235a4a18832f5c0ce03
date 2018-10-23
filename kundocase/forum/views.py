@@ -5,6 +5,12 @@ from kundocase.forum import models, forms
 
 
 def startpage(request):
+    """
+    Serves first page
+
+    :param request: Django request object
+    :return: Django HTML view
+    """
     questions = models.Question.objects.all()
 
     return render(request, 'forum/startpage.html', {

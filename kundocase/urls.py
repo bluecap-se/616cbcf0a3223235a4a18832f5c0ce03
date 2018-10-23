@@ -5,7 +5,8 @@ from django.contrib import admin
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r"^", include("kundocase.forum.urls")),
+    url(r'^', include('kundocase.forum.urls')),
+    url(r'^api/', include('kundocase.rest_api.urls')),
 ]
 
 # Set up static file serving for development
