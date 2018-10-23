@@ -2,14 +2,19 @@ import json
 
 from django.core import serializers
 from django.http import JsonResponse
+from django.shortcuts import get_object_or_404
+
 from kundocase.forum import forms, models
 
 
 class Serializer:
+    form = None
+    model = None
+    data = []
 
     def __init__(self, object=None):
         self.object = object
-        self.data = None
+        self.created = False
 
     def to_representation(self, data):
         data = json.loads(serializers.serialize('json', data))
@@ -17,9 +22,17 @@ class Serializer:
 
         return self.data
 
-    def to_internal(self):
-        # Validate with form.is_valid()
-        pass
+    def to_internal(self, data, *args):
+        input_data = json.loads(data) if args[0] else data
+
+        obj = self.model(**input_data)
+        obj.save()
+
+        input_data.pop('question')
+        self.data = [input_data]
+        self.created = True
+
+        return obj
 
     def untaint(self, row):
         # Converts from {'fields': {'A': 'B'}} to {'A': 'B'}
@@ -33,9 +46,9 @@ class Serializer:
 
         return data
 
-    def response(self, created=False):
+    def response(self):
         status = 200
-        if created:
+        if self.created:
             status = 201
         elif not len(self.data):
             status = 404
@@ -51,3 +64,10 @@ class QuestionSerializer(Serializer):
 class AnswerSerializer(Serializer):
     form = forms.AnswerForm
     model = models.Answer
+
+    def to_internal(self, data, *args):
+        input_data = json.loads(data)
+        question = get_object_or_404(models.Question, id=args[0])
+        input_data['question'] = question
+
+        return super(AnswerSerializer, self).to_internal(input_data, False)
