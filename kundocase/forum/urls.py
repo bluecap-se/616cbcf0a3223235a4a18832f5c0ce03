@@ -10,4 +10,6 @@ urlpatterns = [
     url(r'^question/(?P<id>\d+)$', views.question, name='question'),
     url(r'^answer/?$', views.answer, name='new-answer'),
     url(r'^answer/(?P<id>\d+)/?$', views.answer, name='answer'),
+
+    url(r'^api/question/(?P<id>\d+)/?$', views.question_api, name='question-api'),
 ]
