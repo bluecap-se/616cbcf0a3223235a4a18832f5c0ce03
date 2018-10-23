@@ -2,11 +2,37 @@
 {% block title %}
     Startpage
 {% endblock %}
+
 {% block body %}
+    <h1>New question</h1>
+    <form id="formCreateQuestion" action="{% url 'forum:new-question' %}" method="post">
+        {% csrf_token %}
+
+        <article class="panel">
+            <div class="form-item form-label-group">
+                Title: {{ form.title }}
+            </div>
+
+            <div class="form-item form-label-group">
+                Question: {{ form.content }}
+            </div>
+
+            <div class="form-item form-label-group">
+                Name: {{ form.user_name }}
+            </div>
+
+            <div class="form-item form-label-group">
+                Email: {{ form.user_email }}
+            </div>
+
+            <button class="form-item btn btn-lg btn-primary btn-block" type="submit">Create</button>
+        </article>
+    </form>
+
     <h1>Current questions</h1>
     <ul>
         {% for question in questions %}
-            <li><a href="{% url "question" id=question.id %}">{{ question.title }}</a></li>
+            <li><a href="{% url 'forum:question' id=question.id %}">{{ question.title }}</a></li>
         {% endfor %}
     </ul>
 {% endblock %}
