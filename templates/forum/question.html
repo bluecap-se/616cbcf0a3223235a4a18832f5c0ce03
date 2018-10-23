@@ -3,19 +3,23 @@
     {{ question.title }}
 {% endblock %}
 {% block body %}
-    <a href="/">&laquo; Till startsidan</a>
+    <a href="/">&laquo; To main page</a>
     <h1>{{ question.title }}</h1>
     <p>{{ question.content }}</p>
     <p>By: <strong>{{ question.user_name }}</strong>, {{ question.user_email }}</p>
 
     <h2>Answers</h2>
     {% for answer in answers %}
-        <p>{{ answer.content }}</p>
-        <p>By: <strong>{{ answer.user_name }}</strong>, {{ answer.user_email }}</p>
+        <p>{{ answer.content|linebreaksbr }}</p>
+        <p>
+            By: <strong>{{ answer.user_name }}</strong>,
+            {{ answer.user_email }}
+            <a href="{% url 'forum:answer' id=answer.id %}">Edit</a>
+        </p>
     {% endfor %}
 
     <h1>New answer</h1>
-    <form id="formCreateAnswer" action="{% url 'forum:save-answer' %}" method="post">
+    <form id="formCreateAnswer" action="{% url 'forum:new-answer' %}" method="post">
         {% csrf_token %}
         {{ form.question }}
 
@@ -32,7 +36,7 @@
                 Email: {{ form.user_email }}
             </div>
 
-            <button class="form-item btn btn-lg btn-primary btn-block" type="submit">Send</button>
+            <button class="form-item btn btn-lg btn-primary btn-block" type="submit">Save</button>
         </article>
     </form>
 {% endblock %}
