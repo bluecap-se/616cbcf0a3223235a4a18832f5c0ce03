@@ -5,7 +5,7 @@
 
 {% block body %}
     <h1>New question</h1>
-    <form id="formCreateQuestion" action="{% url 'forum:save-question' %}" method="post">
+    <form id="formCreateQuestion" action="{% url 'forum:new-question' %}" method="post">
         {% csrf_token %}
 
         <article class="panel">
