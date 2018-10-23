@@ -23,12 +23,15 @@ class Serializer:
         return self.data
 
     def to_internal(self, data, *args):
-        input_data = json.loads(data) if args[0] else data
+        try:
+            input_data = json.loads(data)
+        except (ValueError, TypeError):
+            input_data = data
 
         obj = self.model(**input_data)
         obj.save()
 
-        input_data.pop('question')
+        input_data.pop('question', None)
         self.data = [input_data]
         self.created = True
 
@@ -70,4 +73,4 @@ class AnswerSerializer(Serializer):
         question = get_object_or_404(models.Question, id=args[0])
         input_data['question'] = question
 
-        return super(AnswerSerializer, self).to_internal(input_data, False)
+        return super(AnswerSerializer, self).to_internal(input_data)
