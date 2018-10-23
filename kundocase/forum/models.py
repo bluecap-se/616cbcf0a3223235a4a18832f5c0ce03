@@ -1,5 +1,6 @@
 from django.core.exceptions import ValidationError
 from django.db import models
+from kundocase.forum.spamcheck import SpamCheck
 
 
 class Question(models.Model):
@@ -16,6 +17,9 @@ class Question(models.Model):
     def save(self, *args, **kwargs):
         if self.user_email == self.user_name:
             raise ValidationError('User name and email can not be the same.')
+
+        if SpamCheck(self).has_spam():
+            raise ValidationError('Content contains spam.')
 
         super(Question, self).save(*args, **kwargs)
 
@@ -34,5 +38,8 @@ class Answer(models.Model):
     def save(self, *args, **kwargs):
         if self.user_email == self.user_name:
             raise ValidationError('User name and email can not be the same.')
+
+        if SpamCheck(self).has_spam():
+            raise ValidationError('Content contains spam.')
 
         super(Answer, self).save(*args, **kwargs)
