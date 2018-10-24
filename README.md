@@ -1,4 +1,4 @@
-Instruktioner för att köra igång detta projekt
+Instruktioner för att köra igång detta projekt [![Build Status](https://travis-ci.org/bluecap-se/616cbcf0a3223235a4a18832f5c0ce03.svg?branch=develop)](https://travis-ci.org/bluecap-se/616cbcf0a3223235a4a18832f5c0ce03)
 ----------------------------------------------
 
 1. Se till att du har python och [pipenv](https://pipenv.readthedocs.io/en/latest/) installerat, projektet
