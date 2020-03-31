@@ -6,9 +6,9 @@ name = "pypi"
 [dev-packages]
 
 [packages]
-django = "==2.1.2"
+django = "==3.0.4"
 django-environ = "==0.4.5"
-requests = "==2.20.0"
+requests = "==2.23.0"
 
 [requires]
 python_version = "3.7"
