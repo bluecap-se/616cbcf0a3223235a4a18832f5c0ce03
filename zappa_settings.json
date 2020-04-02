@@ -1,0 +1,20 @@
+{
+    "dev": {
+        "aws_region": "eu-west-1",
+        "django_settings": "kundocase.settings",
+        "profile_name": "zappa",
+        "project_name": "kundo",
+        "runtime": "python3.7",
+        "s3_bucket": "zappa-staticfiles-9dt7i1k",
+        "manage_roles": false,
+        "role_name": "ZappaDjangoRole",
+        "role_arn": "arn:aws:iam::528674153043:role/ZappaDjangoRole",
+        "aws_environment_variables" : {
+          "DJANGO_DEBUG": "False"
+        },
+        "vpc_config" : {
+            "SubnetIds": [ "subnet-0d5326942cb51a21a", "subnet-09e0cda0395b57094" ],
+            "SecurityGroupIds": [ "sg-0ea47c36e9d6765a6" ]
+        }
+    }
+}
